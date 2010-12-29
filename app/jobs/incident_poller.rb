@@ -6,7 +6,7 @@ class IncidentPoller
       incident = build_incident_from_call_record(watcher.info_for(number))
       incident.dispatch_notifications!
     end
-    Delayed::Job.enqueue(self, 0, 30.seconds.from_now)
+    Delayed::Job.enqueue(IncidentPoller.new, 0, 30.seconds.from_now)
   end
   
   def new_calls
