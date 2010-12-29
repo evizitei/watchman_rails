@@ -26,10 +26,13 @@ class Incident
   end
   
   def dispatch_notifications!
-    numbers = ["15732395840"] #573-268-5942 573-268-6228
+    time = Time.now + 2.hours
+    numbers = ["15732395840","15732685942","15732686228"]
     message = "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
     numbers.each do |number|
-      Moonshado::Sms.new(number, message).deliver_sms
+      if time.hour >= 9 and time.hour <= 19
+        Moonshado::Sms.new(number, message).deliver_sms
+      end
     end
   end
   
