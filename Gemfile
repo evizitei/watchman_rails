@@ -8,7 +8,7 @@ gem 'mechanize'
 gem "haml"
 gem "sms_fu"
 gem 'pony'
-gem 'watchman'
+gem 'watchman', "0.0.6"
 gem 'mongo_mapper'
 gem 'bson_ext'
 

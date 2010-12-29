@@ -115,7 +115,7 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
-    watchman (0.0.3)
+    watchman (0.0.6)
       mechanize
 
 PLATFORMS
@@ -134,4 +134,4 @@ DEPENDENCIES
   rspec-rails
   sms_fu
   sqlite3-ruby
-  watchman
+  watchman (= 0.0.6)
