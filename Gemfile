@@ -9,6 +9,8 @@ gem "haml"
 gem "sms_fu"
 gem 'pony'
 gem 'watchman'
+gem 'mongo_mapper'
+gem 'bson_ext'
 
 group :development,:test do
   gem "cucumber-rails"

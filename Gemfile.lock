@@ -29,6 +29,8 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     arel (2.0.6)
+    bson (1.1.5)
+    bson_ext (1.1.5)
     builder (2.1.2)
     cucumber (0.10.0)
       builder (>= 2.1.2)
@@ -50,6 +52,8 @@ GEM
       term-ansicolor (~> 1.0.5)
     haml (3.0.25)
     i18n (0.5.0)
+    jnunemaker-validatable (1.8.4)
+      activesupport (>= 2.3.4)
     json (1.4.6)
     mail (2.2.12)
       activesupport (>= 2.3.6)
@@ -59,8 +63,16 @@ GEM
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
     mime-types (1.16)
+    mongo (1.1.5)
+      bson (>= 1.1.5)
+    mongo_mapper (0.8.6)
+      activesupport (>= 2.3.4)
+      jnunemaker-validatable (~> 1.8.4)
+      plucky (~> 0.3.6)
     nokogiri (1.4.4)
     pg (0.10.0)
+    plucky (0.3.6)
+      mongo (~> 1.1)
     polyglot (0.3.1)
     pony (1.1)
       mail (> 2.0)
@@ -110,10 +122,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson_ext
   cucumber-rails
   factory_girl_rails
   haml
   mechanize
+  mongo_mapper
   pg
   pony
   rails (= 3.0.3)
