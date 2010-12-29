@@ -5,3 +5,5 @@ else
 end
 
 MongoMapper.connect(Rails.env)
+Incident.ensure_index(:number)
+Incident.ensure_index(:apparatus)

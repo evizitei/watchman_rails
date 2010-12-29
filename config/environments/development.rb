@@ -19,4 +19,10 @@ MedicWatcher::Application.configure do
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
+  
+  config.after_initialize do
+    Moonshado::Sms.configure do |config|
+      config.production_environment = false
+    end
+  end
 end

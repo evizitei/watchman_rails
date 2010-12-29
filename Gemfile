@@ -11,9 +11,12 @@ gem 'pony'
 gem 'watchman', "0.0.6"
 gem 'mongo_mapper'
 gem 'bson_ext'
+gem 'moonshado-sms'
 
 group :development,:test do
   gem "cucumber-rails"
   gem "rspec-rails"
   gem "factory_girl_rails"
+  gem "timecop"
+  gem "fakeweb"
 end
