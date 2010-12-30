@@ -32,7 +32,7 @@ class Incident
     numbers.each do |number|
       if time.hour >= 9 and time.hour <= 19
         result_hash = Moonshado::Sms.new(number, message).deliver_sms
-        SmsRecord.create!(:moonshado_id=>result_hash[:id],:credit=>result_hash[:credit],:stat=>result_hash[:stat])
+        SmsRecord.create!(:moonshado_id=>result_hash["id"],:credit=>result_hash["credit"],:stat=>result_hash["stat"])
       end
     end
   end
