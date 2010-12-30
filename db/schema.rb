@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101222185941) do
+ActiveRecord::Schema.define(:version => 20101230003201) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -64,5 +64,13 @@ ActiveRecord::Schema.define(:version => 20101222185941) do
   end
 
   add_index "medic_records", ["count"], :name => "index_medic_records_on_count"
+
+  create_table "sms_records", :force => true do |t|
+    t.string   "moonshado_id"
+    t.integer  "credit"
+    t.string   "stat"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
