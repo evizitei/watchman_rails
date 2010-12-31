@@ -43,7 +43,8 @@ class Incident
     if apparatus.size > 1
       true
     elsif apparatus.size == 1
-      !(apparatus.first =~ /M\d{3}/)
+      rig = apparatus.first
+      !(rig =~ /M\d{3}/ || rig =~ /EMSAC/)
     else
       false
     end

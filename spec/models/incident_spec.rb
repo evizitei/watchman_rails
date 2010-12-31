@@ -47,6 +47,11 @@ describe Incident do
       @incident.should_not be_interesting
     end
     
+    it "is not if its a status move" do
+      @incident.update_attributes!(:apparatus=>["EMSAC"])
+      @incident.should_not be_interesting
+    end
+    
     it "is interesting if any county unit is involved" do
       @incident.update_attributes!(:apparatus=>["E1401"])
       @incident.should be_interesting
