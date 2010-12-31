@@ -37,4 +37,19 @@ describe Incident do
     Incident.create!( {:apparatus=>["E1401","Q6","M231"]})
     Incident.for_apparatus("Q6").size.should == 1
   end
+  
+  describe "whether a call is interesting" do
+    before(:each) do
+      @incident = Incident.create!( {:apparatus=>["M231"]})
+    end
+    
+    it "is not if it only has a medic unit" do
+      @incident.should_not be_interesting
+    end
+    
+    it "is interesting if any county unit is involved" do
+      @incident.update_attributes!(:apparatus=>["E1401"])
+      @incident.should be_interesting
+    end
+  end
 end

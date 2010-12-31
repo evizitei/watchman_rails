@@ -26,14 +26,26 @@ class Incident
   end
   
   def dispatch_notifications!
-    time = Time.now + 2.hours
-    numbers = ["15732686228","15732395840","15732685942"]
-    message = "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
-    numbers.each do |number|
-      if time.hour >= 9 and time.hour <= 19
-        result_hash = Moonshado::Sms.new(number, message).deliver_sms
-        SmsRecord.create!(:moonshado_id=>result_hash["id"],:credit=>result_hash["credit"],:stat=>result_hash["stat"])
+    if interesting?
+      time = Time.now + 2.hours
+      numbers = ["15732686228","15732395840","15732685942"]
+      message = "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
+      numbers.each do |number|
+        if time.hour >= 9 and time.hour <= 18
+          result_hash = Moonshado::Sms.new(number, message).deliver_sms
+          SmsRecord.create!(:moonshado_id=>result_hash["id"],:credit=>result_hash["credit"],:stat=>result_hash["stat"])
+        end
       end
+    end
+  end
+  
+  def interesting?
+    if apparatus.size > 1
+      true
+    elsif apparatus.size == 1
+      !(apparatus.first =~ /M\d{3}/)
+    else
+      false
     end
   end
   
