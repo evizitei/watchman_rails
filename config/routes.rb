@@ -1,5 +1,8 @@
 MedicWatcher::Application.routes.draw do
-  match "/" => "main#home"
+  devise_for :users
+
+  root  :to=>"account#manage"
+  match "my_account" => "account#manage"
   match "send_test_message" => "main#test_message"
   match "graphs" => "main#graphs"
   match "call_info" => "main#call_info"

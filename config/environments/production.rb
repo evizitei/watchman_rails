@@ -52,4 +52,5 @@ MedicWatcher::Application.configure do
       config.api_key = ENV['MOONSHADOSMS_URL']
     end
   end
+  config.action_mailer.default_url_options = { :host => 'watchman.heroku.com' }
 end
