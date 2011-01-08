@@ -24,4 +24,5 @@ group :development,:test do
   gem "fakeweb"
   gem 'hpricot'
   gem 'ruby_parser'
+  gem "launchy"
 end
