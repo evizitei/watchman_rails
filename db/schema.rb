@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110108185819) do
+ActiveRecord::Schema.define(:version => 20110112002413) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -65,6 +65,12 @@ ActiveRecord::Schema.define(:version => 20110108185819) do
 
   add_index "medic_records", ["count"], :name => "index_medic_records_on_count"
 
+  create_table "organization_ids", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "sms_records", :force => true do |t|
     t.string   "moonshado_id"
     t.integer  "credit"
@@ -91,6 +97,8 @@ ActiveRecord::Schema.define(:version => 20110108185819) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone"
+    t.string   "organization_id"
+    t.text     "subscriptions"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

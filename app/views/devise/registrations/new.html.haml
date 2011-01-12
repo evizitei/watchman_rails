@@ -18,5 +18,10 @@
     %i (use the phone number where you want to receive SMS messages)
     %br/
     = f.text_field :phone
+  %p
+    = f.label :organization_id, "Organization Id"
+    %i (You must have an active organization ID to subscribe)
+    %br/
+    = f.text_field :organization_id
   %p= f.submit "Sign up"
 = render :partial => "devise/shared/links"

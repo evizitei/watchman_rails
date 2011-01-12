@@ -6,6 +6,7 @@ MedicWatcher::Application.routes.draw do
   match "send_test_message" => "main#test_message"
   match "graphs" => "main#graphs"
   match "call_info" => "main#call_info"
+  resources :subscriptions
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

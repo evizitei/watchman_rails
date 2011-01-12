@@ -13,6 +13,8 @@ module NavigationHelpers
     when /the signup page/
       new_user_registration_path
     when /my account page/
+      "/my_account"
+    when /the login page/
       "/"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
