@@ -5,3 +5,6 @@
 =form_tag subscriptions_path do
   =select_tag 'apparatus',options_for_select(Apparatus.county)
   =submit_tag "subscribe"
+  
+%br
+= button_to "Send me a test SMS",test_message_path

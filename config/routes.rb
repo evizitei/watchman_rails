@@ -3,6 +3,7 @@ MedicWatcher::Application.routes.draw do
 
   root  :to=>"account#manage"
   match "my_account" => "account#manage"
+  match "test_message" => "account#test_sms"
   match "send_test_message" => "main#test_message"
   match "graphs" => "main#graphs"
   match "call_info" => "main#call_info"

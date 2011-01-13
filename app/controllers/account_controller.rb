@@ -4,4 +4,7 @@ class AccountController < ApplicationController
   def manage
   end
   
+  def test_sms
+    current_user.send_sms!("test message from BCFPD Watchman")
+  end
 end
