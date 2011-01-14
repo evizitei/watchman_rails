@@ -5,11 +5,6 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-  user = User.find_or_create_by_email("ethan.vizitei@gmail.com")
-  user.update_attributes!(:organization_id=>"EV2067",
-                          :phone=>"15732395840",
-                          :password=>"firedistrict",
-                          :password_confirmation=>"firedistrict")
 
   org_ids = ["EV2067", "DA0812", "TB6670", "JB1941", "DB3177", "BC7457", "ND2603", "SD9594", "LE5863", "RF4314", "JF4697", 
   "BH8076", "JH4910", "JH0598", "DJ7630", "JJ4703", "MJ1054", "PK3072", "SK8374", "RK2901", "AL1426", "SM3940", "DM3996", 
@@ -54,3 +49,11 @@
   org_ids.each do |id|
     OrganizationId.find_or_create_by_name(id)
   end
+  
+  user = User.find_by_email("ethan.vizitei@gmail.com") || User.new
+  
+  user.update_attributes!(:email=>"ethan.vizitei@gmail.com",
+                          :organization_id=>"EV2067",
+                          :phone=>"15732395840",
+                          :password=>"firedistrict",
+                          :password_confirmation=>"firedistrict")
