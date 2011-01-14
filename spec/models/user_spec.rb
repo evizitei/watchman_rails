@@ -73,5 +73,21 @@ describe User do
       it{ should include("E801")}
       it{ should include("E901")}
     end
+    
+    describe "checking subscription" do
+      before(:each) do
+        @user.add_subscription!("E1401")
+        @user.add_subscription!("E801")
+        @user.add_subscription!("E901")
+      end
+      
+      it "should return true if theres a match" do
+        @user.is_subscribed_to?(["E601","E1401","G806"]).should == true
+      end
+      
+      it "should return false if theres not a match" do
+        @user.is_subscribed_to?(["E601","G906","G806"]).should == false
+      end
+    end
   end
 end
