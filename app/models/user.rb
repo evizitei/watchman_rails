@@ -21,7 +21,12 @@ class User < ActiveRecord::Base
   end
   
   def phone=(value)
-    self[:phone] = value.nil? ? nil : value.gsub(/\s+|\-|\(|\)/,"")
+    if value
+      value = value.gsub(/\s+|\-|\(|\)/,"")
+      value = "1#{value}" if value.size == 10
+    end
+    
+    self[:phone] = value
   end
   
   def add_subscription!(truck)

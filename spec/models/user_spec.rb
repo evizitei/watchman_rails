@@ -3,7 +3,6 @@ require 'spec_helper'
 describe User do
   it { should allow_value("15732395840").for(:phone) }
   it { should_not allow_value("test").for(:phone) }
-  it { should_not allow_value("573-239-5840").for(:phone) }
   it { should validate_presence_of(:phone)}
   it { should validate_presence_of(:organization_id)}
   
@@ -22,6 +21,10 @@ describe User do
     
     it "strips whitespace from within" do
       User.new(:phone=>"1 573 239 5840").phone.should == "15732395840"
+    end
+    
+    it "adds country from within" do
+      User.new(:phone=>"573 239 5840").phone.should == "15732395840"
     end
     
     it "reformats a common phone format" do
