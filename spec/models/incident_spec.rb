@@ -56,5 +56,10 @@ describe Incident do
       @incident.update_attributes!(:apparatus=>["E1401"])
       @incident.should be_interesting
     end
+    
+    it "is not if it's a waiting call" do
+      @incident.update_attributes!(:apparatus=>["E1401","M231"],:number=>"W1234")
+      @incident.should_not be_interesting
+    end
   end
 end

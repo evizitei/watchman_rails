@@ -41,6 +41,8 @@ class Incident
   end
   
   def interesting?
+    return false if number =~ /^[wW]/
+    
     if apparatus.size > 1
       true
     elsif apparatus.size == 1
