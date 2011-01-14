@@ -32,9 +32,9 @@ class Incident
       message = "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
       User.all.each do |user|
         if user.is_subscribed_to?(apparatus)
-          if time.hour >= 9 and time.hour <= 18
+          #if time.hour >= 9 and time.hour <= 18
             user.send_sms!(message)
-          end
+          #end
         end
       end
     end
