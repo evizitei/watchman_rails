@@ -6,5 +6,6 @@ class AccountController < ApplicationController
   
   def test_sms
     current_user.send_sms!("test message from BCFPD Watchman")
+    redirect_to my_account_path
   end
 end

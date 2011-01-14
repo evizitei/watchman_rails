@@ -52,8 +52,4 @@
   
   user = User.find_by_email("ethan.vizitei@gmail.com") || User.new
   
-  user.update_attributes!(:email=>"ethan.vizitei@gmail.com",
-                          :organization_id=>"EV2067",
-                          :phone=>"15732395840",
-                          :password=>"firedistrict",
-                          :password_confirmation=>"firedistrict")
+  user.update_attributes!(:email=>"ethan.vizitei@gmail.com",:organization_id=>"EV2067",:phone=>"15732395840",:password=>"firedistrict",:password_confirmation=>"firedistrict")
