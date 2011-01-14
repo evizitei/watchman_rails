@@ -10,3 +10,10 @@ Feature: choose my apparatus
     Then I should be on the my account page
       And I should see "E1401" within "#my_subscriptions"
       And I should not see "E801" within "#my_subscriptions"
+      
+  Scenario: removeing trucks
+    Given I am logged in as a firefighter
+      And I am subscribed to "E1401"
+    When I press "Remove"
+    Then I should be on the my account page
+      And I should not see "E1401" within "#my_subscriptions" 

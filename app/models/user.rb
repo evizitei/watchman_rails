@@ -29,6 +29,11 @@ class User < ActiveRecord::Base
     self.save!
   end
   
+  def remove_subscription!(truck)
+    self.subscriptions = (self.subscriptions - [truck]).uniq
+    self.save!
+  end
+  
   def send_sms!(message)
     result_hash = Moonshado::Sms.new(self.phone, message).deliver_sms
     SmsRecord.create!(:moonshado_id=>result_hash["id"],:credit=>result_hash["credit"],:stat=>result_hash["stat"])

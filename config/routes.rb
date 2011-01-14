@@ -8,6 +8,7 @@ MedicWatcher::Application.routes.draw do
   match "graphs" => "main#graphs"
   match "call_info" => "main#call_info"
   resources :subscriptions
+  match "cancel_subscription/:apparatus" => "subscriptions#destroy"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -18,6 +19,7 @@ MedicWatcher::Application.routes.draw do
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
+  
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

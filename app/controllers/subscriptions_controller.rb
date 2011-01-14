@@ -5,4 +5,9 @@ class SubscriptionsController < ApplicationController
     current_user.add_subscription!(params[:apparatus])
     redirect_to my_account_path 
   end
+  
+  def destroy
+    current_user.remove_subscription!(params[:apparatus])
+    redirect_to my_account_path
+  end
 end
