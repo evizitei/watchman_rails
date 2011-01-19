@@ -27,17 +27,18 @@ class Incident
   
   def dispatch_notifications!
     if interesting?
-      time = Time.now + 2.hours
-      #numbers = ["15732686228","15732395840","15732685942"]
-      message = "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
+      #time = Time.now + 2.hours
       User.all.each do |user|
         if user.is_subscribed_to?(apparatus)
-          #if time.hour >= 9 and time.hour <= 18
-            user.send_sms!(message)
-          #end
+          user.send_sms!(formatted_message)
         end
       end
+      true
     end
+  end
+  
+  def formatted_message
+    @msg ||= "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
   end
   
   def interesting?
