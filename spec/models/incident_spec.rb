@@ -62,4 +62,25 @@ describe Incident do
       @incident.should_not be_interesting
     end
   end
+  
+  describe "message formatting" do
+    before(:each) do
+      @incident = Incident.new
+    end
+    
+    it "shows only apparatus if there is only 1" do
+      @incident.apparatus = ["E1401"]
+      @incident.cropped_apparatus_list.should == "E1401"
+    end
+    
+    it "shows all apparatus if there are only 3" do
+      @incident.apparatus = ["E1401","E801","M231"]
+      @incident.cropped_apparatus_list.should == "E1401|E801|M231"
+    end
+    
+    it "trails off after 3" do
+      @incident.apparatus = ["E1401","E801","T805","T905","S104","M231"]
+      @incident.cropped_apparatus_list.should == "E1401|E801|T805|..."
+    end
+  end
 end

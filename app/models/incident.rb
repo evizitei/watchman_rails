@@ -38,7 +38,13 @@ class Incident
   end
   
   def formatted_message
-    @msg ||= "#{address}\n#{nature}\n#{apparatus.join("|")}\n#{cross_street_1}\n#{cross_street_2}"
+    @msg ||= "#{address}\n#{nature}\n#{cropped_apparatus_list}\n#{cross_street_1}\n#{cross_street_2}"
+  end
+  
+  def cropped_apparatus_list
+    app_array = apparatus[0,3]
+    app_array << "..." if apparatus.size > 3
+    app_array.join("|")
   end
   
   def interesting?
