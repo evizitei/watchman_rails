@@ -1,10 +1,11 @@
-%h2 Welcome to Watchman
+%h2== Welcome to Watchman, #{current_user.email}
 -if @status_record.active?
   %div.status{:style=>"background-color:green;color:white;width:300px;padding:5px;font-weight:bold;"} Watchman is Active
 -else
   %div.status{:style=>"background-color:red;color:white;width:300px;padding:5px;font-weight:bold;"} Watchman is Down
 %br
-#my_subscriptions
+#my_subscriptions{:style=>"border: 1px solid black;padding:10px;"}
+  %h2 My current subscriptions
   -current_user.subscriptions.each do |name|
     .subscription= name
     =button_to "Remove","/cancel_subscription/#{name}"
