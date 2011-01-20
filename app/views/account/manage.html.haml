@@ -4,11 +4,12 @@
 -else
   %div.status{:style=>"background-color:red;color:white;width:300px;padding:5px;font-weight:bold;"} Watchman is Down
 %br
-#my_subscriptions{:style=>"border: 1px solid black;padding:10px;"}
+#my_subscriptions{:style=>"border: 1px solid black;padding:10px;width:300px;"}
   %h2 My current subscriptions
   -current_user.subscriptions.each do |name|
     .subscription= name
     =button_to "Remove","/cancel_subscription/#{name}"
+%br
 =form_tag subscriptions_path do
   =select_tag 'apparatus',options_for_select(Apparatus.county)
   =submit_tag "subscribe"  
