@@ -5,7 +5,7 @@ class WatchmanStatus < ActiveRecord::Base
     end
     
     def active!
-      monitor.update_attributes!(:active=>false)
+      monitor.update_attributes!(:active=>true)
     end
     
     def kill!
