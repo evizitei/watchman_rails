@@ -1,8 +1,8 @@
 %h2 Welcome to Watchman
 -if @status_record.active?
-  %div.status{:style=>"background-color:green;color:white;"} Watchman is Active
+  %div.status{:style=>"background-color:green;color:white;width:300px;"} Watchman is Active
 -else
-  %div.status{:style=>"background-color:red;color:white;"} Watchman is Down
+  %div.status{:style=>"background-color:red;color:white;width:300px;"} Watchman is Down
 %br
 #my_subscriptions
   -current_user.subscriptions.each do |name|
