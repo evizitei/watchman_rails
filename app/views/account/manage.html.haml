@@ -1,12 +1,17 @@
 %h2 Welcome to Watchman
+-if @status.active?
+  %div.status{:style=>"background_color:green;"} Watchman is Active
+-else
+  %div.status{:style=>"background_color:red;"} Watchman is Down
+%br
 #my_subscriptions
   -current_user.subscriptions.each do |name|
     .subscription= name
     =button_to "Remove","/cancel_subscription/#{name}"
 =form_tag subscriptions_path do
   =select_tag 'apparatus',options_for_select(Apparatus.county)
-  =submit_tag "subscribe"
-  
+  =submit_tag "subscribe"  
+
 %br
 = button_to "Send me a test SMS",test_message_path
 = link_to "logout",destroy_user_session_path

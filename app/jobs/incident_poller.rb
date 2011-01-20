@@ -2,11 +2,17 @@ require 'watchman'
 
 class IncidentPoller
   def perform
-    new_calls.each do |number|
-      incident = build_incident_from_call_record(watcher.info_for(number))
-      incident.dispatch_notifications!
+    begin
+      WatchmanStatus.active!
+      new_calls.each do |number|
+        incident = build_incident_from_call_record(watcher.info_for(number))
+        incident.dispatch_notifications!
+      end
+      Delayed::Job.enqueue(IncidentPoller.new, 0, 30.seconds.from_now)
+    rescue => e
+      WatchmanStatus.kill!
+      raise e
     end
-    Delayed::Job.enqueue(IncidentPoller.new, 0, 30.seconds.from_now)
   end
   
   def new_calls
