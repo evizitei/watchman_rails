@@ -11,7 +11,10 @@ class IncidentPoller
       Delayed::Job.enqueue(IncidentPoller.new, 0, 30.seconds.from_now)
     rescue => e
       WatchmanStatus.kill!
-      InternalMailer.polling_error(e.message).deliver
+      begin
+        InternalMailer.polling_error(e.message).deliver
+      rescue => e
+      end
       Delayed::Job.enqueue(IncidentPoller.new, 0, 2.minutes.from_now)
     end
   end
