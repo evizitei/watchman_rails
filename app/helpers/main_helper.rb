@@ -12,7 +12,7 @@ module MainHelper
   
   def generate_map_url(address)
     locality = address.split("-").last
-    address = address.gsub("-#{locality}","").gsub(/\s*/,"+")
+    address = address.gsub("-#{locality}","").gsub(/\s+/,"+")
     map_url ="http://maps.google.com/maps/api/staticmap" + 
              "?center=#{address},+Columbia,+MO" + 
              "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
