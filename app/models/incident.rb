@@ -20,6 +20,7 @@ class Incident
   key :notes,             String
   key :created_at,        DateTime
   key :apparatus,         Array
+  key :map_url,           String
   
   def initialize(attrs={})
     super({:created_at=>DateTime.now}.merge(attrs))
@@ -38,7 +39,7 @@ class Incident
   end
   
   def formatted_message
-    @msg ||= "#{address}\n#{nature}\n#{cropped_apparatus_list}\n#{cross_street_1}\n#{cross_street_2}"
+    @msg ||= "#{address[0,25]}\n#{nature[0,15]}\n#{cropped_apparatus_list[0,12]}\n#{cross_street_1[0,12]}\n#{cross_street_2[0,12]}\n#{build_map_url}"
   end
   
   def cropped_apparatus_list
@@ -58,6 +59,21 @@ class Incident
     else
       false
     end
+  end
+  
+  def build_map_url
+    return map_url if map_url
+    
+    locality = address.split("-").last
+    address = CGI::escape(address.gsub("-#{locality}",""))
+    local_map_url ="http://maps.google.com/maps/api/staticmap" + 
+             "?center=#{address},+Columbia,+MO" + 
+             "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
+             "#{address},+Columbia,+Mo"
+    local_map_url = Googl.shorten(local_map_url).short_url
+    self.map_url = local_map_url
+    self.save
+    return local_map_url
   end
   
   def self.most_recent

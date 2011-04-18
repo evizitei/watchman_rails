@@ -13,6 +13,7 @@ gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'moonshado-sms'
 gem 'devise'
+gem 'googl'
 
 group :development,:test do
   gem "capybara"
