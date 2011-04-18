@@ -15,10 +15,6 @@ class IstatusWatcher
     call_info = {:id=>incident_number}
     address = page.links_with(:href=>/SearchDStatsSubmit\.php\?Address/).first.text
     call_info[:address] = address
-    call_info[:map_url] = "http://maps.google.com/maps/api/staticmap" + 
-                          "?center=#{address.gsub(/\s*/,"+")},+Columbia,+MO" + 
-                          "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
-                          "#{address.gsub(/\s*/,"+")},+Columbia,+Mo"
     call_info[:nature] = page.parser.xpath("/html/body/table/tr[1]/td[1]/table/tr[3]/td").text.strip.split("-").last
     call_info[:apparatus] = page.parser.xpath("/html/body/table/tr[1]/td[2]/table/tr/td[1]").map{|c| c.text.gsub("\n","").strip}
     call_info[:raw_notes] = notes.map{|n| "#{n[:time]} #{n[:text]}"}.join("|")

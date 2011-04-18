@@ -11,7 +11,7 @@
     %tr
       %td
         %strong Map:
-      %td=image_tag @call_info[:map_url]
+      %td=image_tag generate_map_url(@call_info[:address])
     %tr
       %td 
         %strong Nature:
