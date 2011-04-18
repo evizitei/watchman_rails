@@ -63,13 +63,13 @@ class Incident
   
   def build_map_url
     return map_url if map_url
-    
-    locality = address.split("-").last
-    address = CGI::escape(address.gsub("-#{locality}",""))
+    addy = self.address.to_s
+    locality = addy.split("-").last
+    local_address = CGI::escape(addy.gsub("-#{locality}",""))
     local_map_url ="http://maps.google.com/maps/api/staticmap" + 
-             "?center=#{address},+Columbia,+MO" + 
+             "?center=#{local_address},+Columbia,+MO" + 
              "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
-             "#{address},+Columbia,+Mo"
+             "#{local_address},+Columbia,+Mo"
     local_map_url = Googl.shorten(local_map_url).short_url
     self.map_url = local_map_url
     self.save
