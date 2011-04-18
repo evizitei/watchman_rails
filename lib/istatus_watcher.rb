@@ -13,7 +13,12 @@ class IstatusWatcher
       notes = page.parser.xpath("/html/body/table/tr[3]/table/tr/td/table/tr").map{|node| {:time=>node.children[0].text,:text=>node.children[1].text.gsub("\n","")}}
     end
     call_info = {:id=>incident_number}
-    call_info[:address] = page.links_with(:href=>/SearchDStatsSubmit\.php\?Address/).first.text
+    address = page.links_with(:href=>/SearchDStatsSubmit\.php\?Address/).first.text
+    call_info[:address] = address
+    call_info[:map_url] = "http://maps.google.com/maps/api/staticmap" + 
+                          "?center=#{address.gsub(/\s*/,"+")},+Columbia,+MO" + 
+                          "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
+                          "#{address.gsub(/\s*/,"+")},+Columbia,+Mo"
     call_info[:nature] = page.parser.xpath("/html/body/table/tr[1]/td[1]/table/tr[3]/td").text.strip.split("-").last
     call_info[:apparatus] = page.parser.xpath("/html/body/table/tr[1]/td[2]/table/tr/td[1]").map{|c| c.text.gsub("\n","").strip}
     call_info[:raw_notes] = notes.map{|n| "#{n[:time]} #{n[:text]}"}.join("|")

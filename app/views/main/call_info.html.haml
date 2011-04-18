@@ -9,6 +9,10 @@
         %strong Address:
       %td=@call_info[:address]
     %tr
+      %td
+        %strong Map:
+      %td=image_tag @call_info[:map_url]
+    %tr
       %td 
         %strong Nature:
       %td=@call_info[:nature]
@@ -20,7 +24,7 @@
   -index = 1
   -@call_info[:notes][:operators].each do |op,notes|
     .operator
-      %h3== Operator #{index} 
+      %h3= "Operator #{index}"
       %h5=op
       %table
         -notes.each do |note|
