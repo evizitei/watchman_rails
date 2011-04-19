@@ -63,14 +63,7 @@ class Incident
   
   def build_map_url
     return map_url if map_url
-    addy = self.address.to_s
-    locality = addy.split("-").last
-    local_address = CGI::escape(addy.gsub("-#{locality}",""))
-    local_map_url ="http://maps.google.com/maps/api/staticmap" + 
-             "?center=#{local_address},+Columbia,+MO" + 
-             "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
-             "#{local_address},+Columbia,+Mo"
-    local_map_url = Googl.shorten(local_map_url).short_url
+    local_map_url = self.generate_map_url
     self.map_url = local_map_url
     self.save
     return local_map_url
@@ -82,5 +75,33 @@ class Incident
   
   def self.for_apparatus(apparatus)
     where(:apparatus=>apparatus)
+  end
+
+protected
+  def generate_map_url
+    addy = self.address.to_s
+    locality = addy.split("-").last
+    city = case locality
+    when "CO"
+      "Columbia"
+    when "ST"
+      "Sturgeon"
+    when "CE"
+      "Centralia"
+    when "BC"
+      "BOONE+COUNTY"
+    when "HA"
+      "HALLSVILLE"
+    when "HR"
+      "HARRISBURG"
+    else
+      "Columbia"
+    end
+    local_address = CGI::escape(addy.gsub("-#{locality}",""))
+    local_map_url ="http://maps.google.com/maps/api/staticmap" + 
+             "?center=#{local_address},+#{city},+MO" + 
+             "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
+             "#{local_address},+#{city},+Mo"
+    Googl.shorten(local_map_url).short_url
   end
 end
