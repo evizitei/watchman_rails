@@ -82,7 +82,7 @@ protected
     addy = self.address.to_s
     locality = addy.split("-").last
     city = find_city(locality)
-    local_address = CGI::escape(addy.gsub("-#{locality}","").gsub("/","&"))
+    local_address = addy.gsub("-#{locality}","").gsub("/","&").gsub(/\s+/,"+")
     local_map_url ="http://maps.google.com/maps/api/staticmap" + 
              "?center=#{local_address},+#{city},+MO" + 
              "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
