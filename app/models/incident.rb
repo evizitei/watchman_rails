@@ -81,7 +81,17 @@ protected
   def generate_map_url
     addy = self.address.to_s
     locality = addy.split("-").last
-    city = case locality
+    city = find_city(locality)
+    local_address = CGI::escape(addy.gsub("-#{locality}","").gsub("/","&"))
+    local_map_url ="http://maps.google.com/maps/api/staticmap" + 
+             "?center=#{local_address},+#{city},+MO" + 
+             "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
+             "#{local_address},+#{city},+Mo"
+    Googl.shorten(local_map_url).short_url
+  end
+  
+  def find_city(locality)
+    case locality
     when "CO"
       "Columbia"
     when "ST"
@@ -97,11 +107,5 @@ protected
     else
       "Columbia"
     end
-    local_address = CGI::escape(addy.gsub("-#{locality}",""))
-    local_map_url ="http://maps.google.com/maps/api/staticmap" + 
-             "?center=#{local_address},+#{city},+MO" + 
-             "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
-             "#{local_address},+#{city},+Mo"
-    Googl.shorten(local_map_url).short_url
   end
 end
