@@ -83,11 +83,16 @@ protected
     locality = addy.split("-").last
     city = find_city(locality)
     local_address = addy.gsub("-#{locality}","").gsub("/","&").gsub(/\s+/,"+")
+    full_address = build_full_address(local_address)
     local_map_url ="http://maps.google.com/maps/api/staticmap" + 
-             "?center=#{local_address},+#{city},+MO" + 
+             "?center=#{full_address}" + 
              "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
-             "#{local_address},+#{city},+Mo"
+             "#{full_address}"
     Googl.shorten(local_map_url).short_url
+  end
+  
+  def build_full_address(addy,city)
+    addy.split("&").map{|item| "#{item},+#{city},+MO"}.join("&")
   end
   
   def find_city(locality)
