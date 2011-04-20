@@ -80,7 +80,7 @@ class Incident
 protected
   def generate_map_url
     addy = self.address.to_s
-    full_address = Addresser.build_full_address(local_address)
+    full_address = Addresser.build_full_address(addy)
     local_map_url ="http://maps.google.com/maps/api/staticmap" + 
              "?center=#{full_address}" + 
              "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
