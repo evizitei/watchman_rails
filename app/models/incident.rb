@@ -80,37 +80,12 @@ class Incident
 protected
   def generate_map_url
     addy = self.address.to_s
-    locality = addy.split("-").last
-    city = find_city(locality)
-    local_address = addy.gsub("-#{locality}","").gsub("/","&").gsub(/\s+/,"+")
-    full_address = build_full_address(local_address,city)
+    full_address = Addresser.build_full_address(local_address)
     local_map_url ="http://maps.google.com/maps/api/staticmap" + 
              "?center=#{full_address}" + 
              "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
              "#{full_address}"
     Googl.shorten(local_map_url).short_url
   end
-  
-  def build_full_address(addy,city)
-    addy.split("&").map{|item| "#{item},+#{city},+MO"}.join("&")
-  end
-  
-  def find_city(locality)
-    case locality
-    when "CO"
-      "Columbia"
-    when "ST"
-      "Sturgeon"
-    when "CE"
-      "Centralia"
-    when "BC"
-      "BOONE+COUNTY"
-    when "HA"
-      "HALLSVILLE"
-    when "HR"
-      "HARRISBURG"
-    else
-      "Columbia"
-    end
-  end
+
 end
