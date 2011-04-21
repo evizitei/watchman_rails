@@ -33,4 +33,35 @@ describe Addresser do
       Addresser.build_full_address("1330 I70 W-BC").should == "38.95918203070,-92.21712304020"
     end
   end
+  
+  describe "I70 crossover" do
+    describe "crossover test" do
+      it "recognizes a crossover" do
+        Addresser.is_i70_crossover("I70 E-BC/ROUTE Z N-BC").should be
+        Addresser.is_i70_crossover("ROUTE Z N-BC/I70 E-BC").should be
+      end
+      
+      it "ignores non crossovers" do
+        Addresser.is_i70_crossover("1330 I70 W-BC").should_not be
+        Addresser.is_i70_crossover("GILLESPIE BRIDGE RD W-BC/COATS LN S-BC").should_not be
+        Addresser.is_i70_crossover("4305 BETHANY DR W-BC").should_not be
+      end
+    end
+    
+    # it "works at route Z" do 
+    #       Addresser.build_full_address("I70 E-BC/ROUTE Z N-BC").should == "38.95549363270,-92.15822746970"
+    #     end
+  end
+  
+  describe "Routes which are actually missouri highways" do
+    describe "discerning highways" do
+      specify{ Addresser.is_missouri_highway("5450 ROUTE Z N-BC").should be }
+      specify{ Addresser.is_missouri_highway("4305 BETHANY DR W-BC").should_not be }
+      specify{ Addresser.is_missouri_highway("1330 I70 W-BC").should_not be }
+    end
+    
+    specify{ 
+      Addresser.build_full_address("5450 ROUTE Z N-BC").should == "5450+MISSOURI+Z,+BOONE+COUNTY,+MO" 
+    }
+  end
 end

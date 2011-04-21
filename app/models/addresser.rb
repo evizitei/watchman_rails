@@ -1,14 +1,25 @@
 class Addresser
   class << self
     def build_full_address(addy)
+      addy = apply_rewrites(addy)
       if is_mile_marker(addy)
         mile_marker = extract_mile_marker(addy)
         lat_long_from_mile_marker(mile_marker)
+      elsif is_i70_crossover(addy)
+        cross_street = extract_crossover(addy)
       else
         locality = addy.split("-").last
         city = find_city(locality)
         address = addy.gsub("-#{locality}","").gsub("/","&").gsub(/\s+/,"+")
         address.split("&").map{|item| "#{item},+#{city},+MO"}.join("&")
+      end
+    end
+    
+    def apply_rewrites(address)
+      if is_missouri_highway(address)
+        return address.gsub(/ROUTE\s+([A-Z]+)\s+[NSEW]-/,"MISSOURI \\1-")
+      else
+        address
       end
     end
 
@@ -31,8 +42,18 @@ class Addresser
       end
     end
     
+    def is_missouri_highway(address)
+      clean_address = address.strip 
+      clean_address =~ /^\d+\sROUTE\s+[A-Z]+\s+[NSEW]-[A-Z]{2}$/
+    end
+    
     def is_mile_marker(address)
       address =~ /\d+\s+I70\s+[EW]/
+    end
+    
+    def is_i70_crossover(address)
+      addy = address.strip 
+      (addy =~ /^I70 [EW]-.*\// or addy =~ /^.*\/I70 [EW]-/)
     end
     
     def extract_mile_marker(address)
@@ -42,6 +63,25 @@ class Addresser
       end
       return mm
     end
+    
+    def extract_crossover(address)
+      addy = address.strip
+      (addy =~ /^I70 [EW]-.*\//)
+    end
+    
+    # CROSSOVER_GIS_INFO_FROM_JOSH = {
+    #      "ROUTE J"
+    #      "ROUTE 0"
+    #      "ROUTE BB"
+    #      "HIGHWAY 40"
+    #      "ROUTE DD"
+    #      "STADIUM BLVD"
+    #      "HIGHWAY 63"
+    #      "ST. CHARLES RD"
+    #      "ROUTE Z"
+    #      "HIGHWAY 179"
+    #      "HIGHWAY 40"
+    #    }
     
     MM_GIS_INFO_FROM_JOSH = {
       "137"=>"38.95415604410,-92.14356698240",
