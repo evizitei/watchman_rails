@@ -1,7 +1,7 @@
 class Addresser
   class << self
     def build_full_address(addy)
-      addy = apply_rewrites(addy)
+      addy = apply_rewrites(addy).strip
       if is_mile_marker(addy)
         mile_marker = extract_mile_marker(addy)
         lat_long_from_mile_marker(mile_marker)
