@@ -17,7 +17,7 @@ class Addresser
     
     def apply_rewrites(address)
       if is_missouri_highway(address)
-        return address.gsub(/ROUTE\s+([A-Z]+)\s+[NSEW](|-)/,"MISSOURI \\1\\2")
+        return address.gsub(/(ROUTE|HIGHWAY)\s+([A-Z]+)\s+[NSEW](|-)/,"MISSOURI \\2\\3")
       else
         address
       end
@@ -44,7 +44,7 @@ class Addresser
     
     def is_missouri_highway(address)
       clean_address = address.strip 
-      clean_address =~ /^\d+\sROUTE\s+[A-Z]+\s+[NSEW](|-[A-Z]{2})$/
+      clean_address =~ /^\d+\s(ROUTE|HIGHWAY)\s+[A-Z]+\s+[NSEW](|-[A-Z]{2})$/
     end
     
     def is_mile_marker(address)
@@ -67,6 +67,10 @@ class Addresser
     def extract_crossover(address)
       addy = address.strip
       (addy =~ /^I70 [EW]-.*\//)
+    end
+    
+    def lat_long_from_mile_marker(mm)
+      MM_GIS_INFO_FROM_JOSH[mm]
     end
     
     # CROSSOVER_GIS_INFO_FROM_JOSH = {
@@ -340,8 +344,6 @@ class Addresser
       "136.8"=>"38.95419422110,-92.14725325030",
       "136.9"=>"38.95414197230,-92.14541953590"
     }
-    def lat_long_from_mile_marker(mm)
-      MM_GIS_INFO_FROM_JOSH[mm]
-    end
+    
   end
 end
