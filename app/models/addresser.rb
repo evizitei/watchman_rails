@@ -17,7 +17,7 @@ class Addresser
     
     def apply_rewrites(address)
       if is_missouri_highway(address)
-        return address.gsub(/ROUTE\s+([A-Z]+)\s+[NSEW]-/,"MISSOURI \\1-")
+        return address.gsub(/ROUTE\s+([A-Z]+)\s+[NSEW](|-)/,"MISSOURI \\1\\2")
       else
         address
       end
@@ -38,13 +38,13 @@ class Addresser
       when "HR"
         "HARRISBURG"
       else
-        "Columbia"
+        "BOONE+COUNTY"
       end
     end
     
     def is_missouri_highway(address)
       clean_address = address.strip 
-      clean_address =~ /^\d+\sROUTE\s+[A-Z]+\s+[NSEW]-[A-Z]{2}$/
+      clean_address =~ /^\d+\sROUTE\s+[A-Z]+\s+[NSEW](|-[A-Z]{2})$/
     end
     
     def is_mile_marker(address)

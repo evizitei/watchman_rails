@@ -56,14 +56,12 @@ describe Addresser do
   describe "Routes which are actually missouri highways" do
     describe "discerning highways" do
       specify{ Addresser.is_missouri_highway("5450 ROUTE Z N-BC").should be }
-      specify{ Addresser.is_missouri_highway("	5450 ROUTE Z N-BC").should be }
+      specify{ Addresser.is_missouri_highway("5450 ROUTE Z N").should be }
       specify{ Addresser.is_missouri_highway("4305 BETHANY DR W-BC").should_not be }
       specify{ Addresser.is_missouri_highway("1330 I70 W-BC").should_not be }
     end
     
-    specify{ 
-      Addresser.build_full_address("5450 ROUTE Z N-BC").should == "5450+MISSOURI+Z,+BOONE+COUNTY,+MO" 
-    }
-    specify{ Addresser.build_full_address("	5450 ROUTE Z N-BC").should == "5450+MISSOURI+Z,+BOONE+COUNTY,+MO" }
+    specify{ Addresser.build_full_address("5450 ROUTE Z N-BC").should == "5450+MISSOURI+Z,+BOONE+COUNTY,+MO"}
+    specify{ Addresser.build_full_address("5450 ROUTE Z N").should == "5450+MISSOURI+Z,+BOONE+COUNTY,+MO" }
   end
 end
