@@ -14,6 +14,7 @@ gem 'bson_ext'
 gem 'moonshado-sms'
 gem 'devise'
 gem 'googl'
+gem "fastercsv"
 
 group :development,:test do
   gem "capybara"

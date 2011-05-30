@@ -53,3 +53,9 @@
   user = User.find_by_email("ethan.vizitei@gmail.com") || User.new
   
   user.update_attributes!(:email=>"ethan.vizitei@gmail.com",:organization_id=>"EV2067",:phone=>"15732395840",:password=>"firedistrict",:password_confirmation=>"firedistrict")
+  
+
+FasterCSV.foreach("#{Rails.root}/db/geotargets.csv") do |row|
+  gt = GeoTarget.find_or_create_by_address(:address=>row[0].upcase.strip)
+  gt.update_attributes!(:x_coord=>row[1],:y_coord=>row[2],:city=>row[3])
+end

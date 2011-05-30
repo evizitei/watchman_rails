@@ -67,4 +67,11 @@ describe Addresser do
     specify{ Addresser.build_full_address("3900 HIGHWAY WW E-BC").should == "3900+MISSOURI+WW,+BOONE+COUNTY,+MO" }
     specify{ Addresser.build_full_address("3900 HIGHWAY WW E").should == "3900+MISSOURI+WW,+BOONE+COUNTY,+MO" }
   end
+  
+  describe "addresses which are pre-geocoded" do
+    it "finds the lat long" do
+      GeoTarget.create!(:address=>"1 HOSPITAL DR",:x_coord=>"-92.32838967",:y_coord=>"38.93827067",:city=>"CO")
+      Addresser.build_full_address("1 HOSPITAL DR-CO").should == "38.93827067,-92.32838967"
+    end
+  end
 end

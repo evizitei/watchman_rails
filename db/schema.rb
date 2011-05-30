@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110120022503) do
+ActiveRecord::Schema.define(:version => 20110530180356) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(:version => 20110120022503) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "geo_targets", :force => true do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "x_coord"
+    t.string   "y_coord"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "geo_targets", ["address"], :name => "index_geo_targets_on_address"
 
   create_table "incidents", :force => true do |t|
     t.string   "address"

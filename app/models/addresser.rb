@@ -2,15 +2,18 @@ class Addresser
   class << self
     def build_full_address(addy)
       addy = apply_rewrites(addy).strip
-      if is_mile_marker(addy)
+      locality = addy.split("-").last
+      raw_address = addy.gsub("-#{locality}","")
+      if is_pre_geocoded(raw_address)
+        lat_long_from_database(raw_address)
+      elsif is_mile_marker(addy)
         mile_marker = extract_mile_marker(addy)
         lat_long_from_mile_marker(mile_marker)
       elsif is_i70_crossover(addy)
         cross_street = extract_crossover(addy)
       else
-        locality = addy.split("-").last
         city = find_city(locality)
-        address = addy.gsub("-#{locality}","").gsub("/","&").gsub(/\s+/,"+")
+        address = raw_address.gsub("/","&").gsub(/\s+/,"+")
         address.split("&").map{|item| "#{item},+#{city},+MO"}.join("&")
       end
     end
@@ -40,6 +43,11 @@ class Addresser
       else
         "BOONE+COUNTY"
       end
+    end
+    
+    def is_pre_geocoded(address)
+      clean_address = address.strip
+      GeoTarget.find_by_address(clean_address).present?
     end
     
     def is_missouri_highway(address)
@@ -72,6 +80,13 @@ class Addresser
     def lat_long_from_mile_marker(mm)
       MM_GIS_INFO_FROM_JOSH[mm]
     end
+    
+    def lat_long_from_database(address)
+      clean_address = address.strip
+      gt = GeoTarget.find_by_address(clean_address)
+      "#{gt.y_coord},#{gt.x_coord}"
+    end
+      
     
     # CROSSOVER_GIS_INFO_FROM_JOSH = {
     #      "ROUTE J"
