@@ -81,10 +81,7 @@ protected
   def generate_map_url
     addy = self.address.to_s
     full_address = Addresser.build_full_address(addy)
-    local_map_url ="http://maps.google.com/maps/api/staticmap" + 
-             "?center=#{full_address}" + 
-             "&zoom=14&size=400x400&sensor=false&markers=color:blue|label:Alarm|"+
-             "#{full_address}"
+    local_map_url ="http://maps.google.com/maps?q=#{full_address}&sll=#{full_address}"
     Googl.shorten(local_map_url).short_url
   end
 
