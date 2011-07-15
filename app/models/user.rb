@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
-                  :remember_me, :phone, :organization_id, :subscriptions
+                  :remember_me, :phone, :organization_id, :subscriptions,
+                  :is_sms_subscriber,:is_email_subscriber
   
   validates_presence_of :phone,:organization_id
   validates_format_of :phone,:with=>/^\d{11}$/

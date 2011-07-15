@@ -4,11 +4,14 @@ MedicWatcher::Application.routes.draw do
   root  :to=>"account#manage"
   match "my_account" => "account#manage"
   match "test_message" => "account#test_sms"
+  match "edit_preferences" => "account#edit_preferences",:as=>:edit_preferences
+  match "save_preferences" => "account#save_preferences",:as=>:save_preferences
   match "send_test_message" => "main#test_message"
   match "graphs" => "main#graphs"
   match "call_info" => "main#call_info"
   resources :subscriptions
   match "cancel_subscription/:apparatus" => "subscriptions#destroy"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

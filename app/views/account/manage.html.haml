@@ -16,4 +16,18 @@
 
 %br
 = button_to "Send me a test SMS",test_message_path
+%br
+.comm_types{:style=>"border: 1px solid black;width:300px;padding:25px;"}
+  %h3 I'm currently receiving calls by:
+  %b SMS:
+  = current_user.is_sms_subscriber ? "Yes" : "No"
+  %br
+  %b Email:
+  = current_user.is_email_subscriber ? "Yes" : "No"
+  %br
+  %br
+  = link_to "Change preferences",edit_preferences_path
+%br
+%br
+%br
 = link_to "logout",destroy_user_session_path
