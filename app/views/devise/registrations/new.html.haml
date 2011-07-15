@@ -24,5 +24,13 @@
     %i (You must have an active organization ID to subscribe)
     %br/
     = f.text_field :organization_id
+  %p
+    = f.label :is_sms_subscriber,"get SMS alerts:"
+    %br
+    =f.check_box :is_sms_subscriber
+  %p
+    = f.label :is_email_subscriber,"get Email alerts:"
+    %br
+    =f.check_box :is_email_subscriber
   %p= f.submit "Sign up"
 = render :partial => "devise/shared/links"

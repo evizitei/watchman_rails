@@ -24,6 +24,14 @@
     = f.label :phone
     %br/
     = f.text_field :phone
+  %p
+    = f.label :is_sms_subscriber,"get SMS alerts:"
+    %br
+    =f.check_box :is_sms_subscriber
+  %p
+    = f.label :is_email_subscriber,"get Email alerts:"
+    %br
+    =f.check_box :is_email_subscriber
   %p= f.submit "Update"
 %h3 Cancel my account
 %p
