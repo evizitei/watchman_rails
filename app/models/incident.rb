@@ -31,7 +31,8 @@ class Incident
       #time = Time.now + 2.hours
       User.all.each do |user|
         if user.is_subscribed_to?(apparatus)
-          user.send_sms!(formatted_message)
+          user.send_sms!(formatted_message) if user.is_sms_subscriber?
+          user.send_email!(long_formatted_message) if user.is_email_subscriber?
         end
       end
       true
@@ -40,6 +41,14 @@ class Incident
   
   def formatted_message
     @msg ||= "#{address[0,25]}\n#{nature[0,15]}\n#{cropped_apparatus_list[0,12]}\n#{cross_street_1[0,12]}\n#{cross_street_2[0,12]}\n#{build_map_url}"
+  end
+  
+  def long_formatted_message
+    @long_msg ||= "#{address}\n#{nature}\n#{apparatus_list}\n#{cross_street_1}\n#{cross_street_2}\n#{build_map_url}"
+  end
+  
+  def apparatus_list
+    apparatus.join("|")
   end
   
   def cropped_apparatus_list

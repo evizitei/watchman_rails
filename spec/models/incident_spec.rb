@@ -63,7 +63,7 @@ describe Incident do
     end
   end
   
-  describe "message formatting" do
+  describe "apparatus list formatting" do
     before(:each) do
       @incident = Incident.new
     end
@@ -81,6 +81,27 @@ describe Incident do
     it "trails off after 3" do
       @incident.apparatus = ["E1401","E801","T805","T905","S104","M231"]
       @incident.cropped_apparatus_list.should == "E1401|E801|T805|..."
+      @incident.apparatus_list.should == "E1401|E801|T805|T905|S104|M231"
+    end
+  end
+  
+  describe "long message formatting" do
+    before(:each) do
+      @incident = Incident.new(:address=>"1504 W Lexington",
+                               :nature=>"Residential Structure Fire With People Trapped",
+                               :apparatus=>["E1401","Q6","E801","T805","T905","S104","M231"],
+                               :cross_street_1=>"Georgetown",
+                               :cross_street_2=>"Lexington Ct")
+                               
+      @incident.stub!(:build_map_url).and_return("http://www.ggl.com/map")
+    end
+    
+    it "formats a short version for sms" do
+      @incident.formatted_message.should == "1504 W Lexington\nResidential Str\nE1401|Q6|E80\nGeorgetown\nLexington Ct\nhttp://www.ggl.com/map"
+    end
+    
+    it "formats a long version for emails" do
+      @incident.long_formatted_message.should == "1504 W Lexington\nResidential Structure Fire With People Trapped\nE1401|Q6|E801|T805|T905|S104|M231\nGeorgetown\nLexington Ct\nhttp://www.ggl.com/map"
     end
   end
 end
