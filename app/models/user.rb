@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     SmsRecord.create!(:moonshado_id=>result_hash["id"],:credit=>result_hash["credit"],:stat=>result_hash["stat"])
   end
   
+  def send_email!(message)
+    InternalMailer.generic_message(self,message).deliver
+  end
+  
   def is_subscribed_to?(apparatus_list)
     (subscriptions & apparatus_list).size > 0
   end

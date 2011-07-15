@@ -29,7 +29,7 @@ class Incident
   def dispatch_notifications!
     if interesting?
       #time = Time.now + 2.hours
-      User.all.each do |user|
+      User.find_each do |user|
         if user.is_subscribed_to?(apparatus)
           user.send_sms!(formatted_message) if user.is_sms_subscriber
           user.send_email!(long_formatted_message) if user.is_email_subscriber
