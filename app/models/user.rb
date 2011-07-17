@@ -41,8 +41,14 @@ class User < ActiveRecord::Base
   end
   
   def send_sms!(message)
-    result_hash = Moonshado::Sms.new(self.phone, message).deliver_sms
-    SmsRecord.create!(:moonshado_id=>result_hash["id"],:credit=>result_hash["credit"],:stat=>result_hash["stat"])
+    if email == "ethan.vizitei@gmail.com"
+      TWILIO.send_sms!(message, phone)
+    else
+      result_hash = Moonshado::Sms.new(self.phone, message).deliver_sms
+      SmsRecord.create!(:moonshado_id=>result_hash["id"],
+                        :credit=>result_hash["credit"],
+                        :stat=>result_hash["stat"])
+    end
   end
   
   def send_email!(message)
