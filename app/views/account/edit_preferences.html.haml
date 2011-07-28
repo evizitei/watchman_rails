@@ -1,8 +1,14 @@
 %h2 Edit Account Preferences
 
 =form_for current_user, :url=>save_preferences_path do |f|
+  %label Phone:
+  =f.text_field :phone
+  %br
   %label get SMS alerts:
   =f.check_box :is_sms_subscriber
+  %br
+  %label Email:
+  =f.text_field :email
   %br
   %label get Email alerts:
   =f.check_box :is_email_subscriber

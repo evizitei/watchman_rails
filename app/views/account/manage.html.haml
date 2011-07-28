@@ -31,9 +31,11 @@
   %h3 I'm currently receiving calls by:
   %b SMS:
   = current_user.is_sms_subscriber ? "Yes" : "No"
+  ="(#{current_user.phone})"
   %br
   %b Email:
   = current_user.is_email_subscriber ? "Yes" : "No"
+  ="(#{current_user.email})"
   %br
   %br
   = link_to "Change preferences",edit_preferences_path
