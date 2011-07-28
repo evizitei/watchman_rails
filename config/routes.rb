@@ -9,8 +9,13 @@ MedicWatcher::Application.routes.draw do
   match "send_test_message" => "main#test_message"
   match "graphs" => "main#graphs"
   match "call_info" => "main#call_info"
-  resources :subscriptions
+  resources :subscriptions do 
+    collection do
+      post "day"
+    end
+  end
   match "cancel_subscription/:apparatus" => "subscriptions#destroy"
+  match "cancel_day_subscription/:apparatus" => "subscriptions#destroy_day"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   before_create :check_organization_id
   
   serialize :subscriptions,Array
+  serialize :day_subscriptions,Array
   
   def initialize(attrs = {})
     super(attrs)
@@ -43,6 +44,11 @@ class User < ActiveRecord::Base
   
   def remove_subscription!(truck)
     self.subscriptions = (self.subscriptions - [truck]).uniq
+    self.save!
+  end
+  
+  def remove_day_subscription!(truck)
+    self.subscriptions = (self.day_subscriptions - [truck]).uniq
     self.save!
   end
   
