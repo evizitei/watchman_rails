@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715171723) do
+ActiveRecord::Schema.define(:version => 20110728152527) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20110715171723) do
     t.text     "subscriptions"
     t.boolean  "is_sms_subscriber"
     t.boolean  "is_email_subscriber"
+    t.text     "day_subscriptions"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

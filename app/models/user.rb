@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, 
-                  :remember_me, :phone, :organization_id, :subscriptions,
-                  :is_sms_subscriber,:is_email_subscriber
+                  :remember_me, :phone, :organization_id, :subscriptions, :day_subscriptions,
+                  :is_sms_subscriber, :is_email_subscriber
   
   validates_presence_of :phone,:organization_id
   validates_format_of :phone,:with=>/^\d{11}$/
@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   def initialize(attrs = {})
     super(attrs)
     self.subscriptions ||= []
+    self.day_subscriptions ||= []
   end
   
   def phone=(value)
@@ -32,6 +33,11 @@ class User < ActiveRecord::Base
   
   def add_subscription!(truck)
     self.subscriptions = (self.subscriptions + [truck]).uniq
+    self.save!
+  end
+  
+  def add_day_subscription!(truck)
+    self.day_subscriptions = (self.day_subscriptions + [truck]).uniq
     self.save!
   end
   
@@ -49,10 +55,12 @@ class User < ActiveRecord::Base
   end
   
   def is_subscribed_to?(apparatus_list)
-    (subscriptions & apparatus_list).size > 0
+    subs = subscriptions
+    subs += day_subscriptions if is_daytime?
+    (subs.uniq & apparatus_list).size > 0
   end
   
-  protected
+protected
   
   def check_organization_id
     if OrganizationId.find_by_name(organization_id).nil?
@@ -61,5 +69,9 @@ class User < ActiveRecord::Base
     else
       true
     end
+  end
+  
+  def is_daytime?
+    Time.now.hour >= 8 and Time.now.hour <= 21
   end
 end

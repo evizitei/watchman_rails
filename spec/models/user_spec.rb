@@ -91,6 +91,24 @@ describe User do
       it "should return false if theres not a match" do
         @user.is_subscribed_to?(["E601","G906","G806"]).should == false
       end
+      
+      describe "day subscriptions" do
+        before do
+          @user.add_day_subscription!("E1501")
+        end
+        
+        it "matches during the day" do
+          Timecop.freeze(2011, 7, 28, 14)
+          @user.is_subscribed_to?(["E601","E1501","G606"]).should == true
+          Timecop.return
+        end
+        
+        it "doesn't match at night" do
+          Timecop.freeze(2011, 7, 28, 2)
+          @user.is_subscribed_to?(["E601","E1501","G606"]).should == false
+          Timecop.return
+        end
+      end
     end
   end
 end
