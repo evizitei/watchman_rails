@@ -95,6 +95,8 @@ describe User do
       describe "day subscriptions" do
         before do
           @user.add_day_subscription!("E1501")
+          @user.add_day_subscription!("E601")
+          @user.add_day_subscription!("G606")
         end
         
         it "matches during the day" do
@@ -107,6 +109,11 @@ describe User do
           Timecop.freeze(2011, 7, 28, 2)
           @user.is_subscribed_to?(["E601","E1501","G606"]).should == false
           Timecop.return
+        end
+        
+        it "can have subscriptions removed" do
+          @user.remove_day_subscription!("E1501")
+          @user.reload.day_subscriptions.size.should == 2
         end
       end
     end

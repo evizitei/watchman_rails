@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   end
   
   def remove_day_subscription!(truck)
-    self.subscriptions = (self.day_subscriptions - [truck]).uniq
+    self.day_subscriptions = (self.day_subscriptions - [truck]).uniq
     self.save!
   end
   
