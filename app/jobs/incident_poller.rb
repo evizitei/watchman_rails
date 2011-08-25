@@ -8,7 +8,7 @@ class IncidentPoller
         incident = build_incident_from_call_record(watcher.info_for(number))
         incident.dispatch_notifications!
       end
-      Delayed::Job.enqueue(IncidentPoller.new, 0, 30.seconds.from_now)
+      Delayed::Job.enqueue(IncidentPoller.new, 0, 20.seconds.from_now)
     rescue => e
       WatchmanStatus.kill!
       begin
@@ -20,7 +20,7 @@ class IncidentPoller
   end
   
   def new_calls
-   watcher.current_call_incident_numbers.select do |number|
+    watcher.current_call_incident_numbers.select do |number|
       Incident.find_by_number(number).nil?
     end
   end
@@ -33,7 +33,9 @@ class IncidentPoller
                      :cross_street_2=>call.cross_streets.last,
                      :response_level=>call.response_level,
                      :priority=>call.priority,
-                     :apparatus=>call.apparatus)
+                     :apparatus=>call.apparatus,
+                     :notes=>call.notes,
+                     :split_notes=>call.spliced_notes)
   end
   
 private

@@ -18,6 +18,7 @@ class Incident
   key :upgrade_at,        DateTime
   key :patient_contact_at,DateTime
   key :notes,             String
+  key :split_notes,       Hash
   key :created_at,        DateTime
   key :apparatus,         Array
   key :map_url,           String
