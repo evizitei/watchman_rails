@@ -44,7 +44,7 @@ class IncidentPoller
                      :response_level=>call.response_level,
                      :priority=>call.priority,
                      :apparatus=>call.apparatus,
-                     :notes=>call.notes,
+                     :notes=>call.raw_notes,
                      :split_notes=>call.spliced_notes)
   end
   
