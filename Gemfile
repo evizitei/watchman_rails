@@ -11,7 +11,6 @@ gem 'pony'
 gem 'watchman', "0.0.7"
 gem 'mongo_mapper'
 gem 'bson_ext'
-gem 'moonshado-sms'
 gem 'devise'
 gem 'googl'
 gem "fastercsv"
