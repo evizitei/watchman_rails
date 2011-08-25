@@ -4,9 +4,15 @@ class IncidentPoller
   def perform
     begin
       WatchmanStatus.active!
-      new_calls.each do |number|
-        incident = build_incident_from_call_record(watcher.info_for(number))
-        incident.dispatch_notifications!
+      current_calls.each do |number|
+        watcher_call = watcher.info_for(number)
+        incident = Incident.find_by_number(number)
+        if incident.nil?
+          incident = build_incident_from_call_record(watcher_call)
+          incident.dispatch_notifications!
+        else
+          update_incident(incident, watcher_call)
+        end
       end
       Delayed::Job.enqueue(IncidentPoller.new, 0, 20.seconds.from_now)
     rescue => e
@@ -19,10 +25,14 @@ class IncidentPoller
     end
   end
   
-  def new_calls
-    watcher.current_call_incident_numbers.select do |number|
-      Incident.find_by_number(number).nil?
-    end
+  def current_calls
+    watcher.current_call_incident_numbers
+  end
+
+  def update_incident(incident, call)
+    incident.notes = call.notes
+    incident.split_notes = call.spliced_notes
+    incident.save
   end
   
   def build_incident_from_call_record(call)

@@ -4,31 +4,6 @@ describe IncidentPoller do
   
   it { should be_a_delayed_job_worker }
   
-  describe "list of new calls" do
-    before(:each) do
-      ["12345","67890","24680"].each do |id|
-        Factory(:incident,:number=>id)
-      end
-      current_calls = ["12345","23456","67890","78901","24680","13579"]
-      Watchman::CallWatcher.stub(:new){ double("call watcher",:current_call_incident_numbers=>current_calls)}
-    end
-    
-    subject{ IncidentPoller.new.new_calls }
-    
-    context "because it ignores calls already in the database" do
-      it { should_not include("12345") }
-      it { should_not include("67890") }
-      it { should_not include("24680") }
-    end
-    
-    context "because it retains calls not in the database" do
-      it { should include("23456") }
-      it { should include("78901") }
-      it { should include("13579") }
-    end
-    
-  end
-  
   let(:incident_params){{:address=>"1504 W Lexington",
                                        :incident_number=>"201054321",
                                        :nature=>"VIOLENT OVERDOSE",
@@ -78,6 +53,16 @@ describe IncidentPoller do
       incident.should_receive(:dispatch_notifications!)
       Incident.stub(:create!){ incident }
       IncidentPoller.new.perform
+    end
+    
+    it "updates the notes for an existing call" do
+      Incident.create!(:number=>"201054321", :notes=> "Here are my notes!")
+      incident = Incident.find_by_number("201054321")
+      incident.should_not be_nil
+      IncidentPoller.new.perform
+      incident = Incident.find_by_number("201054321")
+      incident.should_not be_nil
+      incident.notes.should == "Long Notes"
     end
     
     # it "should enqueue itself for 15 seconds later" do
