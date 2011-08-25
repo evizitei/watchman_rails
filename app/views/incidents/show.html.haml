@@ -1,0 +1,15 @@
+%b Incident:
+=@incident.incident_number
+%b Address:
+=@incident.address
+%br
+%b Nature:
+=@incident.nature
+%br
+-@incident.split_notes.each do |operator, notes|
+  %b= "Notes from #{operator}:"
+  -notes.each do |note|
+    ="#{note[:time]}: #{note[:text]}"
+  %br
+  %br
+  
