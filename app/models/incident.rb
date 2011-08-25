@@ -22,6 +22,7 @@ class Incident
   key :created_at,        DateTime
   key :apparatus,         Array
   key :map_url,           String
+  key :notes_url,         String
   
   def initialize(attrs={})
     super({:created_at=>DateTime.now}.merge(attrs))
@@ -41,11 +42,11 @@ class Incident
   end
   
   def formatted_message
-    @msg ||= "#{address[0,25]}\n#{nature[0,15]}\n#{cropped_apparatus_list[0,12]}\n#{cross_street_1[0,12]}\n#{cross_street_2[0,12]}\n#{build_map_url}"
+    @msg ||= "#{address[0,25]}\n#{nature[0,15]}\n#{cropped_apparatus_list[0,12]}\n#{cross_street_1[0,12]}\n#{cross_street_2[0,12]}\nMap: #{build_map_url}\nNotes: #{build_notes_url}"
   end
   
   def long_formatted_message
-    @long_msg ||= "#{address}\n#{nature}\n#{apparatus_list}\n#{cross_street_1}\n#{cross_street_2}\n#{build_map_url}"
+    @long_msg ||= "#{address}\n#{nature}\n#{apparatus_list}\n#{cross_street_1}\n#{cross_street_2}\nMap: #{build_map_url}\nNotes: #{build_notes_url}"
   end
   
   def apparatus_list
@@ -79,6 +80,14 @@ class Incident
     return local_map_url
   end
   
+  def build_notes_url
+    return notes_url if notes_url
+    local_notes_url = self.generate_notes_url
+    self.notes_url = local_notes_url
+    self.save
+    return local_notes_url
+  end
+  
   def self.most_recent
     self.sort(:created_at.desc).first
   end
@@ -95,4 +104,8 @@ protected
     Googl.shorten(local_map_url).short_url
   end
 
+  def generate_notes_url
+    local_notes_url = "http://watchman.heroku.com/incidents/#{number}"
+    Googl.shorten(local_notes_url).short_url
+  end
 end
