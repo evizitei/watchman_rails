@@ -4,11 +4,11 @@ gem 'rails', '3.0.3'
 
 gem 'pg',:group=>:production
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'mechanize'
+gem 'mechanize', "1.0.0"
 gem "haml"
 gem "sms_fu"
 gem 'pony'
-gem 'watchman', "0.0.7"
+gem 'watchman', "0.1.1"
 gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'devise'
