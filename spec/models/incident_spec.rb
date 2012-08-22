@@ -93,15 +93,16 @@ describe Incident do
                                :cross_street_1=>"Georgetown",
                                :cross_street_2=>"Lexington Ct")
                                
-      @incident.stub!(:build_map_url).and_return("http://www.ggl.com/map")
+      @incident.stub(:build_map_url).and_return("http://www.ggl.com/map")
+      @incident.stub(:build_notes_url).and_return("http://www.ggl.com/notes")
     end
     
     it "formats a short version for sms" do
-      @incident.formatted_message.should == "1504 W Lexington\nResidential Str\nE1401|Q6|E80\nGeorgetown\nLexington Ct\nhttp://www.ggl.com/map"
+      @incident.formatted_message.should == "1504 W Lexington\nResidential Str\nE1401|Q6|E80\nGeorgetown\nLexington Ct\nMap: http://www.ggl.com/map\nNotes: http://www.ggl.com/notes"
     end
     
     it "formats a long version for emails" do
-      @incident.long_formatted_message.should == "1504 W Lexington\nResidential Structure Fire With People Trapped\nE1401|Q6|E801|T805|T905|S104|M231\nGeorgetown\nLexington Ct\nhttp://www.ggl.com/map"
+      @incident.long_formatted_message.should == "1504 W Lexington\nResidential Structure Fire With People Trapped\nE1401|Q6|E801|T805|T905|S104|M231\nGeorgetown\nLexington Ct\nMap: http://www.ggl.com/map\nNotes: http://www.ggl.com/notes"
     end
   end
 end

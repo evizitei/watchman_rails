@@ -1,3 +1,5 @@
+require 'url_shortener'
+
 class Incident
   include MongoMapper::Document
   
@@ -101,11 +103,11 @@ protected
     addy = self.address.to_s
     full_address = Addresser.build_full_address(addy)
     local_map_url ="http://maps.google.com/maps?q=#{full_address}&sll=#{full_address}"
-    Googl.shorten(local_map_url).short_url
+    UrlShortener.shorten(local_map_url)
   end
 
   def generate_notes_url
     local_notes_url = "http://watchman.heroku.com/incidents/#{number}"
-    Googl.shorten(local_notes_url).short_url
+    UrlShortener.shorten(local_notes_url)
   end
 end

@@ -13,6 +13,7 @@ gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'devise'
 gem 'googl'
+gem 'bitly'
 gem "fastercsv"
 
 group :development,:test do
