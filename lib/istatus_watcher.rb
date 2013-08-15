@@ -71,8 +71,8 @@ class IstatusWatcher
   
   def login(agent)
     form = agent.get('http://istatus.gocolumbiamo.com/').form("UserForm")
-    form.UserName = "bf.swish"
-    form.Password = "1414"
+    form.UserName = "BF.TURNE"
+    form.Password = "Temp0rary"
     agent.submit(form, form.buttons.first)
   end
   
