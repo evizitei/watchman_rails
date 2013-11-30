@@ -2,8 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 
-gem 'pg',:group=>:production
-#gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'pg'
 gem 'mechanize', "1.0.0"
 gem "haml"
 gem "sms_fu"
@@ -27,4 +26,5 @@ group :development,:test do
   gem 'hpricot'
   gem 'ruby_parser'
   gem "launchy"
+  gem 'pry'
 end
