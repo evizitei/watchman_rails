@@ -7,8 +7,7 @@ MedicWatcher::Application.routes.draw do
   match "edit_preferences" => "account#edit_preferences",:as=>:edit_preferences
   match "save_preferences" => "account#save_preferences",:as=>:save_preferences
   match "send_test_message" => "main#test_message"
-  match "graphs" => "main#graphs"
-  match "call_info" => "main#call_info"
+  
   resources :subscriptions do 
     collection do
       post "day"
