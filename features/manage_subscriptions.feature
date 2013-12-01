@@ -5,8 +5,7 @@ Feature: choose my apparatus
 
   Scenario: adding trucks
     Given I am logged in as a firefighter
-    When I select "E1401" from "apparatus"
-      And I press "subscribe"
+    When I subscribe to E1401
     Then I should be on the my account page
       And I should see "E1401" within "#my_subscriptions"
       And I should not see "E801" within "#my_subscriptions"

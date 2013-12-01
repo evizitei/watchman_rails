@@ -17,3 +17,6 @@ test: &test
   password: goround
   host: localhost
 
+
+cucumber:
+  <<: *test
