@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
-ruby '1.8.7'
+ruby '1.9.3'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.2.15'
 
 gem 'pg'
 gem 'mechanize', "1.0.0"
@@ -15,6 +15,15 @@ gem 'devise'
 gem 'googl'
 gem 'bitly'
 gem "fastercsv"
+gem 'unicorn'
+gem 'delayed_job_active_record'
+gem 'jquery-rails'
+
+group :assets do
+  gem 'sass-rails',   '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'uglifier',     '>= 1.0.3'
+end
 
 group :development,:test do
   gem "capybara"
@@ -28,4 +37,5 @@ group :development,:test do
   gem 'ruby_parser'
   gem "launchy"
   gem 'pry'
+  gem 'foreman'
 end

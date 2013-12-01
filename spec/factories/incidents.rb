@@ -1,2 +1,4 @@
-Factory.define :incident do |i|
+FactoryGirl.define do
+  factory :incident do |i|
+  end
 end
