@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201113551) do
+ActiveRecord::Schema.define(:version => 20131201204329) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -84,6 +84,19 @@ ActiveRecord::Schema.define(:version => 20131201113551) do
     t.datetime "updated_at"
   end
 
+  create_table "rails_admin_histories", :force => true do |t|
+    t.text     "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month",      :limit => 2
+    t.integer  "year",       :limit => 8
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+
   create_table "sms_records", :force => true do |t|
     t.string   "moonshado_id"
     t.integer  "credit"
@@ -115,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20131201113551) do
     t.boolean  "is_sms_subscriber"
     t.boolean  "is_email_subscriber"
     t.text     "day_subscriptions"
+    t.boolean  "admin"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
