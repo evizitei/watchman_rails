@@ -107,7 +107,7 @@ protected
   end
 
   def generate_notes_url
-    local_notes_url = "http://watchman.heroku.com/incidents/#{number}"
+    local_notes_url = "http://watchman-cedar.herokuapp.com/incidents/#{number}"
     UrlShortener.shorten(local_notes_url)
   end
 end
